@@ -1,0 +1,25 @@
+<h2><i>Please Login</i></h2>
+<%= form_for @user, :url => {:controller => "sessions"} do |f| %>
+<div class="bg_break">
+    <%= f.label :email %><br>
+    <%= f.text_field :email , :class => 'form-control login_input' %>
+</div> 
+<div class="bg_break">
+    <%= f.label :password %><br>
+    <%= f.password_field :password , :class => 'form-control login_input' %>
+</div> 
+<div class="bg_break">
+    <%= f.submit "Login",  :class => 'btn btn-primary' %>
+</div>  
+<% end %>
+
+<div class="bg_break">
+	<div>
+		<span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
+		<%= link_to "Forgot Password?", {:action=> "new", :controller => "passwordresets"}, :class => "md_link" %>
+	</div>
+	<div class="sm_break">
+		<span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
+		<%= link_to "Sign up now in seconds!", {:action=> "new", :controller => "users"}, :class => "md_link " %>
+	</div>
+</div>

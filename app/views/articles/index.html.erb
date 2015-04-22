@@ -1,0 +1,142 @@
+<!-- search box -->
+<div class="row">
+  <div class="col-sm-6 bg_break"> 
+    <div class="input-group inline">
+      <%= form_tag({:controller=>"articles", :action => "index"}, :method=>"post") do  %>
+      <%= text_field_tag :search_tx, params[:search_tx], :class => "form-control searchBox" %>
+      <span class="input-group-btn">
+        <%= submit_tag "Search", :class => "btn btn-success" %>
+      </span>
+      <% end %>
+      </div> 
+    </div>
+</div>
+
+<!-- add new link -->
+<div class="bg_break">
+	<%= link_to "Add", {:action =>"new"}, :class => "btn btn-primary glyphicon glyphicon-plus bold"  %>
+</div>	
+
+<div class="bg_break">
+<span class="glyphicon glyphicon-bookmark"></span>&nbsp;
+<h4 class="inline">Bookmarks collection</h4>
+
+<!--Sorting -->
+<div class="btn-group">
+  <button type="button" class="btn btn-default">sorted by</button>
+  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+    <span class="caret"></span>
+    <span class="sr-only">Toggle Dropdown</span>
+  </button>
+  <ul class="dropdown-menu" role="menu">
+     <li role="presentation">
+      <%= link_to "Earliest",{:action => "index", :sortOrder_tx => "ASC", :page_indx => params[:page_indx]}, {:role => "menuitem", :tabindex => "-1"} %>
+    </li>
+    <li role="presentation">
+        <%= link_to "Latest", {:action => "index", :sortOrder_tx => "DESC", :page_indx => params[:page_indx]}, {:role => "menuitem", :tabindex => "-1"} %>
+    </li>
+  </ul>
+</div>
+
+<h1 class="divider"></h1>
+
+  <!-- posts  -->
+  <% @articles.each do |item| %>
+    <!-- show posts where user is allowed to login -->
+    <% if item.user.loginallowed %>
+    <div class="row bg_break">
+    <% if !@loggedInUser.blank? %>
+    <div class="col-md-1">
+      <div class="row">
+        <div class="col-md-1">
+          <!-- logged in user must own post in order to display it -->
+          <% if @loggedInUser.id == item.user.id %>
+            <!-- edit -->
+             <%= link_to 'Edit', {:action =>"edit", :id  => item.id, :locked => true} , :class => "btn btn-primary glyphicon glyphicon-edit bold" %>
+          <% elsif item.public %>
+          <!-- edit (disabled) --> 
+            <%= link_to 'Edit', {:action =>"edit", :id  => item.id, :locked => true} , :class => "btn btn-default glyphicon glyphicon-edit disabled" , :title => 'some title', :rel => 'tooltip' %>
+          <% end %>
+        </div>
+      </div>
+      <div class="row sm_break">
+        <div class="col-md-1">
+          <% if @loggedInUser.id == item.user.id %>
+            <!-- delete -->
+             <%= link_to 'Delete', {:action =>"destroy", :id  => item.id}, :class => "btn btn-danger glyphicon glyphicon-remove bold" , method: :delete, data: { confirm: 'Are you sure?' } %>
+            <% elsif item.public %>
+            <!-- delete (disabled) -->
+             <%= link_to 'Delete', {:action =>"destroy", :id  => item.id}, :class => "btn btn-default glyphicon glyphicon-remove disabled" , method: :delete, data: { confirm: 'Are you sure?' } %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <% end %>
+
+ <!-- logged in user can see all their posts (public/private) -->
+ <!-- everyone has access by default -->
+ <% allowViewPost = true %>
+ 
+ <!-- if logged in user is not post owner and post is private then hide it -->
+ <% if !@loggedInUser.blank? && @loggedInUser.id != item.user.id && !item.public %>
+ <% allowViewPost = false %>   
+ <% end %>  
+
+  <% if allowViewPost %> 
+  <div class="col-md-11">
+    <div class="row">
+      <div class="col-md-12">
+        <!-- title -->
+        <%= link_to item.title, {:controller => "articles", :action =>"show", :id => item.id}, :target => "_blank", :class => "link" %>
+      </div>
+    </div>  
+    <div class="row">
+      <div class="col-md-12">
+      <!-- the user -->
+      <span class="glyphicon glyphicon-user"></span>
+      <%= link_to item.user.name, {:controller =>"users", :action => "profile", :name=> item.user.name},  :target => "_blank" %>
+      <!-- time -->
+      <span class="glyphicon glyphicon-time"></span>
+      <%= time_ago_in_words(item.created_at) %>
+      <!-- category -->
+      via <%= link_to item.category, {:controller =>"articles", :action => "category", :category=> item.category}, :target => "_blank" %> 
+      </div>
+    </div>    
+  </div> 
+<% end %>
+</div>
+
+<% if allowViewPost %>
+<hr/>
+<% end %>
+<% end %>
+<% end %>
+  <!-- pagination -->
+  <ul class="pagination" >
+    <!-- pagination state tracker -->
+    <% prevState = setPrevState(params[:page_indx].to_i) %>
+    <% nextState = setNextState(params[:page_indx].to_i, @collection_count.to_i) %>
+    <!-- configure prev -->
+     <li class=<%= prevState %>>
+      <% if prevState != "disabled" %>
+          <%= link_to @prevText, {:action => "index", :page_indx => params[:page_indx].to_i - 1} %>
+      <% else %>
+          <%= link_to @prevText, "javascript:void(0)" %>
+      <% end %>
+     </li>
+    <!-- create link -->
+    <% @collection_count.times do |item| %>
+    <li class=<%= setActiveState(params[:page_indx].to_i, item.to_i) %>>
+      <%= link_to item + 1, {:action => "index", :page_indx => item + 1} %>
+    </li>
+    <% end %>
+    <!-- configure next -->
+    <li class=<%= nextState %>>
+      <% if nextState != "disabled" %>
+          <%= link_to @nextText, {:action => "index", :page_indx => params[:page_indx].to_i + 1} %>
+      <% else %>
+          <%= link_to @nextText, "javascript:void(0)" %>
+      <% end %>
+     </li>
+  </ul>
+</div>

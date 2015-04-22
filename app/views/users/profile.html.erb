@@ -1,0 +1,60 @@
+<span class="glyphicon glyphicon-<%= @arrUserAttrib[2] %>"></span>
+  <h4 class="inline">
+	 <%= @title.html_safe %>
+  </h4>
+<h1 class="divider"></h1>
+
+<!-- fetch categories -->
+<% arrCategory = Rails.application.config.arrCategory.split(',') %>
+
+<!-- construct tree -->
+<% arrCategory.each do |item| %>
+<!-- filter to category -->
+<% objects = @articles.select { |obj| obj.category == item } %>
+<!-- we only care about size > 0 -->
+<% if objects.size > 0 %>
+
+<% expand_collapse = "h3_" + item %>
+
+<div onclick="toggleCategory('<%= item %>','<%= expand_collapse %>')">	
+	<h3 id="<%= expand_collapse %>" class="glyphicon glyphicon-collapse-down"><%= item %>(<%= objects.size %>)</h3>
+</div>
+
+<!-- begin children -->
+<div class="pad_right hide_elem <%= item %>">
+<% objects.each do |obj| %>
+    <!-- show posts where user has loginallowed -->
+    <div class="row bg_break">
+      <div class="col-md-11">
+        <div class="row">
+          <div class="col-md-12">
+            <!-- title -->
+            <%= link_to obj.title, obj.link, :target => "_blank", :class => "link" %>
+          </div>
+        </div>  
+      <div class="row">
+        <div class="col-md-12">
+        <% if @arrUserAttrib[0] %> 
+        <!-- the user -->
+        <span class="glyphicon glyphicon-user"></span>
+        <%= link_to obj.user.name, {:controller =>"users", :action => "profile", :name=> obj.user.name},  :target => "_blank" %>
+        <% end %>
+        <!-- time -->
+        <span class="glyphicon glyphicon-time"></span>
+        <%= time_ago_in_words(obj.created_at) %>
+        <!-- category -->
+        via <%= link_to obj.category, {:controller =>"articles", :action => "category", :category=> obj.category}, :target => "_blank" %>
+        </div>
+      </div>    
+    </div> 
+</div>
+<% end %>
+</div>
+<!-- end children -->
+<h1 class="divider"></h1>
+<% end %>
+<% end %>
+
+
+
+

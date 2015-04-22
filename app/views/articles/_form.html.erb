@@ -1,0 +1,39 @@
+<%= form_for @article do |f| %>
+  <!-- show error messages if we have any -->
+  <% if @article.errors.any? %>
+     <%= content_tag :div, returnErrorMessage(@article).html_safe, class: returnMsgNotify("error_message") %>
+  <% end %>
+  <div class="bg_break md_box">
+    <%= f.label :title %><br>
+    <%= f.text_field :title , :class => 'form-control', :maxlength => 100 %>
+  </div> 
+  <div class="bg_break md_box">
+    <%= f.label :category %><br>    
+    <%= f.select :category,   options_for_select([["-- Choose--", ""],
+["Technology", "Technology"],
+["Music", "Music"],
+["Business", "Business"],
+["Entertainment", "Entertainment"],
+["Sports", "Sports"],
+["Science", "Science"],
+["Health","Health"],
+["Misc","Misc"],
+["Sports","Sports"],
+["Beauty","Beauty"],
+["Style","Style"],
+["Politics","Politics"],
+["Movies","Movies"],
+    ], @article.category) %>
+  </div>
+  <div class="bg_break md_box">
+    <%= f.label :link %><br>
+    <%= f.text_field :link , :class => 'form-control', :readonly => (params[:locked]), :maxlength => 300 %>
+  </div>
+  <div class="bg_break">
+     <%= f.label "Public Bookmark?", :title=>"Everyone can see this link" %>
+     <%= f.check_box :public, :checked => @article.public, :class => "checkbox"  %>
+  </div>  
+ <div class="bg_break">
+    <%= f.submit @btnName_tx,  :class => 'btn btn-primary' %> 
+ </div>
+<% end %>

@@ -1,0 +1,10 @@
+<h2><i>Reset Password</i></h2>
+<%= form_for @user, :url => {:controller => "passwordresets"} do |f| %>
+<div class="bg_break">
+    <%= f.label :email %><br>
+    <%= f.text_field :email , :class => 'form-control login_input' %>
+</div> 
+<div class="bg_break">
+    <%= f.submit "Reset",  :class => 'btn btn-primary' %> 
+</div>  
+<% end %>

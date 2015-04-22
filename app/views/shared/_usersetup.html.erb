@@ -1,0 +1,27 @@
+<h2><i><%= @arrAttrib[0] %></i></h2>
+<% if !@user.nil? %>
+<%= form_for @user, :html => { :multipart => true } do |f| %>
+<div class="bg_break <%= @arrAttrib[1] %>">
+    <%= f.label "UserName" %><br>
+    <%= f.text_field :name , :class => 'form-control login_input' %>
+</div> 
+<div class="bg_break <%= @arrAttrib[2] %>">
+    <%= f.label :email %><br>
+    <%= f.text_field :email , :class => 'form-control login_input' %>
+</div> 
+<div class="bg_break <%= @arrAttrib[3] %>">
+    <%= f.label :password %><br>
+    <%= f.password_field :password , :class => 'form-control login_input' %>
+</div> 
+<div class="bg_break <%= @arrAttrib[4] %>">
+    <%= f.label :password_confirmation %><br>
+    <%= f.password_field :password_confirmation , :class => 'form-control login_input' %>
+</div> 
+<div class="bg_break">
+    <%= f.submit @arrAttrib[5],  :class => 'btn btn-primary' %> 
+</div>  
+<% end %>
+<div class="bg_break <%= @arrAttrib[6] %>">
+Already a member? <%= link_to "Login", {:action=> "new", :controller => "sessions"}, :class => "md_link" %>
+</div>
+<% end %>

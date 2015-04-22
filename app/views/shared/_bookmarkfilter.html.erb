@@ -1,0 +1,38 @@
+<% if !@articles.blank? %>
+<span class="glyphicon glyphicon-<%= @arrUserAttrib[2] %>"></span>
+  <h4 class="inline">
+	 <%= @title.html_safe %>
+  </h4>
+<h1 class="divider"></h1>
+<!-- posts  -->
+  <% @articles.each do |item| %>
+    <!-- show posts where user has loginallowed -->
+    <div class="row bg_break">
+      <div class="col-md-11">
+        <div class="row">
+          <div class="col-md-12">
+            <!-- title -->
+            <%= link_to item.title, item.link, :target => "_blank", :class => "link" %>
+          </div>
+        </div>  
+      <div class="row">
+        <div class="col-md-12">
+        <% if @arrUserAttrib[0] %> 
+        <!-- the user -->
+        <span class="glyphicon glyphicon-user"></span>
+        <%= link_to item.user.name, {:controller =>"users", :action => "profile", :name=> item.user.name},  :target => "_blank" %>
+        <% end %>
+        <!-- time -->
+        <span class="glyphicon glyphicon-time"></span>
+        <%= time_ago_in_words(item.created_at) %>
+        <% if @arrUserAttrib[1] %> 
+        <!-- category -->
+        via <%= link_to item.category, {:controller =>"articles", :action => "category", :category=> item.category}, :target => "_blank" %>
+        <% end %> 
+        </div>
+      </div>    
+    </div> 
+</div>
+<hr/>
+<% end %>
+<% end %>
