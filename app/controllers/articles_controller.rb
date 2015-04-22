@@ -144,7 +144,7 @@ class ArticlesController < ApplicationController
        message_tx += ";Category changed from " + oldarticle.category + " to " + newarticle.category
      end
      if oldarticle.public != newarticle.public
-       message_tx += ";Public changed from " + oldarticle.public + " to " + newarticle.public 
+       message_tx += ";Public changed from " + oldarticle.public.to_s + " to " + newarticle.public.to_s 
      end 
      return message_tx
   end
