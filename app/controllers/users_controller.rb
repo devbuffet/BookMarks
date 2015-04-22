@@ -113,7 +113,7 @@ class UsersController < ApplicationController
       # log activity
       logUserActivity("user signup") 
       # send email
-      # UserMailer.signup_sendMail(@user, "xxx: Your Account Info.").deliver
+      UserMailer.signup_sendMail(@user, ENV['siteName'] + ": Your Account Info.").deliver
       # redirect them
       redirect_to :controller => "articles", :action => "new"    
     end
