@@ -59,10 +59,10 @@ module Fav
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
 
-    config.siteUserName = 'aspdotnetprogrammer@gmail.com'
-    config.gmailUserName = 'aspdotnetprogrammer@gmail.com'
-    config.gmailPassword = 'bashar19833626'
-    config.url = "http://localhost:3000/"
+    config.siteUserName = 'xxx'
+    config.gmailUserName = 'xxx'
+    config.gmailPassword = 'xxx'
+    config.url = "xxx"
 
     config.arrCategory = "Technology,Music,Business,Entertainment,Sports,Science,Health,Misc,Sports,Beauty,Style,Politics,Movies" 
   end
