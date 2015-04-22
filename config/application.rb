@@ -59,10 +59,10 @@ module Fav
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
 
-    config.siteUserName = 'xxx'
-    config.gmailUserName = 'xxx'
-    config.gmailPassword = 'xxx'
-    config.url = "xxx"
+    config.siteUserName = ENV['siteUserName']
+    config.gmailUserName = ENV['gmailUserName']
+    config.gmailPassword = ENV['gmailPassword']
+    config.url = ENV['url']
 
     config.arrCategory = "Technology,Music,Business,Entertainment,Sports,Science,Health,Misc,Sports,Beauty,Style,Politics,Movies" 
   end
