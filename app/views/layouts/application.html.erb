@@ -46,11 +46,11 @@
         <li class = "<%= (@active_tab == "HOME" ? "active" : "") %>">
             <%= link_to "Home", {:controller => "articles", :action => "index"}, :class => "bold glyphicon glyphicon-home" %>
         </li>
+        <!-- logged in -->
+        <% if !@AccountUser.blank? %>
         <li class = "<%= (@active_tab == "ADD" ? "active" : "") %>">
             <%= link_to "Add", {:controller => "articles", :action => "new"}, :class => "bold glyphicon glyphicon-plus" %>
-        </li>
-        <!-- not logged in -->
-        <% if !@AccountUser.blank? %> 
+        </li> 
         <li class = "<%= (@active_tab == "FOLLOW" ? "active" : "") %>">
             <%= link_to "Follows", {:controller => "follows", :action => "index"}, :class => "bold glyphicon glyphicon-star" %>
         </li>
