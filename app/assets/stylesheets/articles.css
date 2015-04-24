@@ -98,3 +98,8 @@ select
 {
 	display: none;
 }
+
+.follow_box
+{
+	width: 185px;
+}

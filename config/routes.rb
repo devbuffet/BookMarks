@@ -15,12 +15,10 @@ Fav::Application.routes.draw do
   match 'users/profile/(:name)' => 'users#profile'
   match 'bookmarks/category/(:category)' => 'articles#category'
   match "users/forgotpassword" => 'passwordresets#new'
+  match 'follows/:id/delete' => 'follows#destroy'
+  match 'follows/:id/add' => 'follows#add'
   
-  resources :articles
-  resources :users
-  resources :sessions
-  resources :passwordresets
-
+  resources :articles,:users,:sessions,:passwordresets,:follows
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

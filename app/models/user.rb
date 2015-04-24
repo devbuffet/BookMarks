@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   # relationship
   has_many :articles
   has_many :activity_logs
+  has_many :follows
   has_secure_password
  
   #has_attached_file :avatar

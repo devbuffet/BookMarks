@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Favs</title>
+  <title>Bookmark collection</title>
 
 <!-- jquery -->  
 <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.1.min.js"></script>
@@ -36,7 +36,7 @@
            <%= link_to "Bookmarky", {:action=> "index", :controller => "articles"}, :class => "navbar-brand" %>
           <% else %>
           <!-- logged in -->
-          <%= link_to "My Bookmarks",{:controller => "users", :action => "profile", :name => @AccountUser.name}, :class => "navbar-brand underline" %>
+          <%= link_to "Profile",{:controller => "users", :action => "profile", :name => @AccountUser.name}, :class => "navbar-brand underline" %>
           <% end %>
     </div>
 
@@ -48,19 +48,22 @@
         </li>
         <li class = "<%= (@active_tab == "ADD" ? "active" : "") %>">
             <%= link_to "Add", {:controller => "articles", :action => "new"}, :class => "bold glyphicon glyphicon-plus" %>
-        </li> 
+        </li>
+        <!-- not logged in -->
+        <% if !@AccountUser.blank? %> 
+        <li class = "<%= (@active_tab == "FOLLOW" ? "active" : "") %>">
+            <%= link_to "Follows", {:controller => "follows", :action => "index"}, :class => "bold glyphicon glyphicon-star" %>
+        </li>
+        <% end %> 
+        <!-- not logged in -->
+        <% if @AccountUser.blank? %>
         <li class = "<%= (@active_tab == "LOGIN" ? "active" : "") %>">
-          <!-- not logged in -->
-          <% if @AccountUser.blank? %>
-            <%= link_to "Login", {:controller => "sessions", :action => "new"}, :class => "bold glyphicon glyphicon-log-out" %>
-          <% end %>
+             <%= link_to "Login", {:controller => "sessions", :action => "new"}, :class => "bold glyphicon glyphicon-log-out" %>
         </li> 
          <li class = "<%= (@active_tab == "REGISTER" ? "active" : "") %>">
-          <!-- not logged in -->
-          <% if @AccountUser.blank? %>
             <%= link_to "Register", {:controller => "users", :action => "new"}, :class => "bold glyphicon glyphicon-user" %>
-          <% end %>
-        </li> 
+        </li>
+        <% end %> 
       </ul>
     <!-- welcome message -->
     
@@ -73,7 +76,7 @@
       </button>
       <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
         <li role="presentation">
-            <%= link_to "My Bookmarks",{:controller => "users", :action => "profile", :name => @AccountUser.name}, {:role => "menuitem", :tabindex => "-1"} %>
+            <%= link_to "Profile",{:controller => "users", :action => "profile", :name => @AccountUser.name}, {:role => "menuitem", :tabindex => "-1"} %>
         </li>
         <li role="presentation">
             <%= link_to "Sign Out",{:controller => "sessions", :action => "logout"}, {:role => "menuitem", :tabindex => "-1"} %>

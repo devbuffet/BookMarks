@@ -1,6 +1,10 @@
 class ArticlesController < ApplicationController  
  
   def category
+
+    # authorized?
+    validateLogin()
+
     # give page a title
     @title = "Bookmarks filed under <i>" + params[:category].to_s + "</i>"
     # posts based on category
@@ -16,6 +20,7 @@ class ArticlesController < ApplicationController
   end
 
   def show 
+
     @loggedInUser = returnLoggedinUser
 
     if !@loggedInUser.nil?
@@ -26,16 +31,23 @@ class ArticlesController < ApplicationController
       article = Article.where("id = ? AND public = ? AND active = ?", params[:id],true,true).first
     end
 
-    if article.nil?
-       # warn user
-       flash[:error_message] = "Invalid bookmark access."    
-       render('show')
+    # authorized?
+    if @loggedInUser.nil?   
+      validateLogin()
     else
-      # log activity
-      logUserActivity("viewed bookmark: " + params[:id].to_s) 
-      # redirect to bookmark link
-      redirect_to article.link
+      if article.nil?
+        # warn user
+        flash[:error_message] = "Invalid bookmark access."    
+        render('show')
+      else
+        # log activity
+        logUserActivity("viewed bookmark: " + params[:id].to_s) 
+        # redirect to bookmark link
+        redirect_to article.link
+      end
     end
+
+    
      
   end
 
@@ -118,18 +130,20 @@ class ArticlesController < ApplicationController
   end
 
   def edit
+
+    userLoggedIn = returnLoggedinUser()
+
     @btnName_tx = "Update"
     @article = Article.find(params[:id])
 
     # get post owner info
     postOwner = @article.user_id
 
-    if postOwner != returnLoggedinUser.id
+    if postOwner != userLoggedIn.id
         # flash user
         flash[:error_message] = "<strong>Sorry you are not the bookmark owner.</strong>"
         redirect_to :action => "index"
     end
-
   end
 
   def returnAttribChange(oldarticle, newarticle)
@@ -181,13 +195,6 @@ def destroy
   # success 
   flash[:success_message] = "<strong>Success!</strong> Your bookmark has been deleted."    
   redirect_to :action => "index"
-end
-
-def validateLogin
-  # checks for valid login
-    if (returnLoggedinUser.blank?)
-        redirect_to :action => "new", :controller => "sessions"
-    end
 end
 
 private

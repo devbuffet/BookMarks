@@ -64,6 +64,6 @@ module Fav
     config.gmailPassword = ENV['gmailPassword']
     config.url = ENV['url']
 
-    config.arrCategory = "Technology,Music,Business,Entertainment,Sports,Science,Health,Misc,Sports,Beauty,Style,Politics,Movies" 
+    config.arrCategory = "Technology,Music,Business,Entertainment,Sports,Science,Health,Misc,Beauty,Style,Politics,Movies" 
   end
 end

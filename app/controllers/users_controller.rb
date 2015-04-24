@@ -1,5 +1,12 @@
 class UsersController < ApplicationController
   def profile
+
+    # authorized?
+    validateLogin()
+
+    # start allow follow
+    @follow_fg = true
+
     # get the user
     # user's profile
     @UserName = User.where("name = ? and loginallowed = ?", params[:name], true).first
@@ -21,7 +28,30 @@ class UsersController < ApplicationController
      @arrUserAttrib = [false,true,"user"]
 
      # log activity
-      logUserActivity("viewed profile: " + params[:name].to_s) 
+     logUserActivity("viewed profile: " + params[:name].to_s) 
+
+     # @UserName.id => who you're following
+     # @LoggedinUser_id => who you're logged in as
+
+     @LoggedinUser_id = returnLoggedinUser
+
+     if !@LoggedinUser_id.nil? 
+        @LoggedinUser_id = @LoggedinUser_id.id
+     end
+
+     @followcount = Follow.where("follower_id = ? AND user_id = ?",@LoggedinUser_id,@UserName.id).count
+
+     # ensure you can't follow yourself and you're not already following that person
+     if @UserName.id == @LoggedinUser_id || @followcount > 0
+        @follow_fg = false
+     end 
+
+    # attrib
+    @arrUserAttrib = [false,true,nil]
+
+    # who are you following?
+    @arrFollowers = returnFollow('follows',@UserName.id.to_s)
+  
     end
   end
 

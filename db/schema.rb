@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150408152244) do
+ActiveRecord::Schema.define(:version => 20150423143519) do
 
   create_table "activity_logs", :force => true do |t|
     t.integer  "user_id"
@@ -29,6 +29,13 @@ ActiveRecord::Schema.define(:version => 20150408152244) do
     t.boolean  "public"
     t.integer  "user_id"
     t.boolean  "active",     :default => true
+  end
+
+  create_table "follows", :force => true do |t|
+    t.integer  "follower_id"
+    t.integer  "user_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "users", :force => true do |t|

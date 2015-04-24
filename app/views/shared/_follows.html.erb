@@ -1,0 +1,45 @@
+<!-- Follows -->
+<% if @arrUserAttrib[0] == true %>
+<div onclick="toggleCategory('Follows','h3_Follows')">	
+	<h3 id="h3_Follows" class="glyphicon glyphicon-collapse-down">Following(<%=@arrFollows.count %>)</h3>
+</div>
+<div class="pad_right hide_elem Follows follow_box">
+	<% @arrFollows.each do |item| %>
+	<% if item['loginallowed'] == 't' %>
+		<div class="row sm_break">
+			<div class="col-sm-6">
+			<!-- the user -->
+      		<span class="glyphicon glyphicon-user"></span>
+        		<%= link_to item['name'], {:controller =>"users", :action => "profile", :name=> item['name']},  :target => "_blank" %>
+      		
+			</div>
+			<div class="col-sm-6">
+				<!-- unfollow action -->
+      		<%= link_to 'Unfollow', {:action =>"destroy", :id  => item['id'], :name => item['name']}, :class => "btn btn-danger btn-sm glyphicon glyphicon-remove bold" , method: :delete,  data: { confirm: 'Are you sure?' }  %>
+			</div>
+		</div> 
+		<% end %> 
+	<% end %>
+</div>
+<% end %>
+
+<!-- Followers -->
+<% if @arrUserAttrib[1] == true %>
+<h1 class="divider"></h1>
+<div onclick="toggleCategory('Followers','h3_Followers')">	
+	<h3 id="h3_Followers" class="glyphicon glyphicon-collapse-down">Followers(<%=@arrFollowers.count %>)</h3>
+</div>
+<div class="pad_right hide_elem Followers">
+	<% @arrFollowers.each do |item| %>
+	<% if item['loginallowed'] == 't' %>
+		<div class="row sm_break">
+			<div class="col-md-12">
+			<!-- the user -->
+      		<span class="glyphicon glyphicon-user"></span>
+        		<%= link_to item['name'], {:controller =>"users", :action => "profile", :name=> item['name']},  :target => "_blank" %>
+ 			</div>
+		</div> 
+		<% end %> 
+	<% end %>
+</div>
+<% end %>

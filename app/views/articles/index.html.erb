@@ -51,22 +51,20 @@
         <div class="col-md-1">
           <!-- logged in user must own post in order to display it -->
           <% if @loggedInUser.id == item.user.id %>
-            <!-- edit -->
-             <%= link_to 'Edit', {:action =>"edit", :id  => item.id, :locked => true} , :class => "btn btn-primary glyphicon glyphicon-edit bold" %>
-          <% elsif item.public %>
-          <!-- edit (disabled) --> 
-            <%= link_to 'Edit', {:action =>"edit", :id  => item.id, :locked => true} , :class => "btn btn-default glyphicon glyphicon-edit disabled" , :title => 'some title', :rel => 'tooltip' %>
-          <% end %>
-        </div>
-      </div>
-      <div class="row sm_break">
-        <div class="col-md-1">
-          <% if @loggedInUser.id == item.user.id %>
-            <!-- delete -->
-             <%= link_to 'Delete', {:action =>"destroy", :id  => item.id}, :class => "btn btn-danger glyphicon glyphicon-remove bold" , method: :delete, data: { confirm: 'Are you sure?' } %>
-            <% elsif item.public %>
-            <!-- delete (disabled) -->
-             <%= link_to 'Delete', {:action =>"destroy", :id  => item.id}, :class => "btn btn-default glyphicon glyphicon-remove disabled" , method: :delete, data: { confirm: 'Are you sure?' } %>
+              <div class="btn-group">
+                <button type="button" class="btn btn-primary btn-sm dropdown-toggle glyphicon glyphicon-cog" data-toggle="dropdown" aria-expanded="false">&nbsp;<span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                  <li>
+                  <!-- edit -->
+                  <%= link_to 'Edit', {:action =>"edit", :id  => item.id, :locked => true} , :class => "glyphicon glyphicon-edit bold" %>
+                  </li>
+                  <li>
+                  <!-- delete -->
+                  <%= link_to 'Delete', {:action =>"destroy", :id  => item.id}, :class => "glyphicon glyphicon-remove bold" , method: :delete, data: { confirm: 'Are you sure?' } %>
+                  </li> 
+                </ul>
+              </div>
           <% end %>
         </div>
       </div>

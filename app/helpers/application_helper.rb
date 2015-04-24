@@ -81,5 +81,33 @@ module ApplicationHelper
 		return arrCollection
     end
 
+    # checks for valid login
+    def validateLogin
+    	if (returnLoggedinUser.blank?)
+    		flash[:success_message]= "You must be logged in to do that."
+        	redirect_to :action => "new", :controller => "sessions"
+    	end
+	end
+
+	# returns who's following who
+	def returnFollow(followType_tx, user_id)
+		arrRes = []
+		query = 'select f.id, loginallowed,name from follows f inner join users u on u.id = f.user_id and '
+
+		if(followType_tx =='follows')
+			query += ' f.follower_id = ' + user_id
+		else
+			query += 'f.user_id = ' + user_id
+		end
+		connection = ActiveRecord::Base.connection
+    	# loop and push row into the array
+    	result = connection.exec_query(query)
+      	result.each do |row|
+        	arrRes.push(row)
+      	end
+      	connection.close
+      	return arrRes
+	end
+
 end
  

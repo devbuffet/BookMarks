@@ -1,6 +1,15 @@
+<%= @arrRes %>
 <span class="glyphicon glyphicon-<%= @arrUserAttrib[2] %>"></span>
   <h4 class="inline">
 	 <%= @title.html_safe %>
+   <!-- follow -->
+   <% if @follow_fg == true %>
+   <!-- show follow button -->
+   <%= link_to 'Follow', {:controller => "follows", :action =>"add", :id  => @UserName.id, :name => @UserName.name}, :class => "btn btn-success btn-sm glyphicon glyphicon-star bold"  %>
+   <% elsif @UserName.id != @LoggedinUser_id %>
+     <!-- show followed status -->
+     <span class="btn btn-primary btn-sm bold glyphicon glyphicon-ok">Following</span>
+   <% end %>
   </h4>
 <h1 class="divider"></h1>
 
@@ -51,10 +60,10 @@
 <% end %>
 </div>
 <!-- end children -->
-<h1 class="divider"></h1>
 <% end %>
 <% end %>
 
-
-
-
+<!-- followers -->
+<div class="sm_break">
+<%= render ("shared/follows") %>
+</div>
