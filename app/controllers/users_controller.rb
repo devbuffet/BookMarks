@@ -47,12 +47,13 @@ class UsersController < ApplicationController
      end 
 
     # attrib
-    @arrUserAttrib = [false,true,nil]
+    @arrUserAttrib = [true,false,nil]
 
     # who are you following?
-    @arrFollowers = returnFollow('follows',@UserName.id.to_s)
+    @arrFollows = returnFollow('follows',@UserName.id.to_s)
   
     end
+
   end
 
 	def new 
