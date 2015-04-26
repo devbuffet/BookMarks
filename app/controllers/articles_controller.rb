@@ -100,7 +100,7 @@ class ArticlesController < ApplicationController
     # authorized?
     validateLogin()
     
-    @btnName_tx = "Add"
+    @btnName_tx = "Save"
     @article = Article.new
     
     # posts are public by default

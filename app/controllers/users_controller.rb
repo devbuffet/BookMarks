@@ -16,22 +16,22 @@ class UsersController < ApplicationController
       flash[:error_message] = "<strong>Error:</strong> Invalid UserName!"
       render ('profile')
     else
-      # show user's public posts
-      @articles = Article.where("user_id = ? AND public = ? AND active = ?", @UserName.id, true,true)
+       # show user's public posts
+       @articles = Article.where("user_id = ? AND public = ? AND active = ?", @UserName.id, true,true)
                      .includes(:user)
                      .order("Category, Created_at DESC")
 
-     # give page a title
-     @title = "<i>" + params[:name].to_s + "'s</i> bookmarks"
+       # give page a title
+       @title = "<i>" + params[:name].to_s + "'s</i> bookmarks"
 
-     # user/category 
-     @arrUserAttrib = [false,true,"user"]
+       # user/category 
+       @arrUserAttrib = [false,true,"user"]
 
-     # log activity
-     logUserActivity("viewed profile: " + params[:name].to_s) 
+       # log activity
+       logUserActivity("viewed profile: " + params[:name].to_s) 
 
-     # @UserName.id => who you're following
-     # @LoggedinUser_id => who you're logged in as
+       # @UserName.id => who you're following
+       # @LoggedinUser_id => who you're logged in as
 
      @LoggedinUser_id = returnLoggedinUser
 
@@ -47,7 +47,7 @@ class UsersController < ApplicationController
      end 
 
     # attrib
-    @arrUserAttrib = [true,false,nil]
+    @arrUserAttrib = [true,false,nil,false]
 
     # who are you following?
     @arrFollows = returnFollow('follows',@UserName.id.to_s)
@@ -57,6 +57,10 @@ class UsersController < ApplicationController
   end
 
 	def new 
+
+    # already logged in?
+    checkLoginStatus()
+
     # active tab => REGISTER
     @active_tab = "REGISTER"
   

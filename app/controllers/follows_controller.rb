@@ -37,7 +37,7 @@ class FollowsController < ApplicationController
 
 	       	if ! @loggedInUser.nil?
 	       		# attrib
-	    		@arrUserAttrib = [true,true,@loggedInUser.name]
+	    		@arrUserAttrib = [true,true,@loggedInUser.name,true]
 
 	    		# who are you following?
 			    @arrFollows = returnFollow('follows',@loggedInUser.id.to_s)

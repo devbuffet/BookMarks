@@ -13,10 +13,13 @@
         		<%= link_to item['name'], {:controller =>"users", :action => "profile", :name=> item['name']},  :target => "_blank" %>
       		
 			</div>
+			<!-- hide unfollow when on profile page -->
+			<% if @arrUserAttrib[3] == true %>
 			<div class="col-sm-6">
 				<!-- unfollow action -->
       		<%= link_to 'Unfollow', {:action =>"destroy", :id  => item['id'], :name => item['name']}, :class => "btn btn-danger btn-sm glyphicon glyphicon-remove bold" , method: :delete,  data: { confirm: 'Are you sure?' }  %>
 			</div>
+			<% end %>
 		</div> 
 		<% end %> 
 	<% end %>

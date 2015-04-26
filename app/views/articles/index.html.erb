@@ -26,7 +26,7 @@
   <button type="button" class="btn btn-default">sorted by</button>
   <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
     <span class="caret"></span>
-    <span class="sr-only">Toggle Dropdown</span>
+    <span class="sr-only"></span>
   </button>
   <ul class="dropdown-menu" role="menu">
      <li role="presentation">
@@ -61,7 +61,7 @@
                   </li>
                   <li>
                   <!-- delete -->
-                  <%= link_to 'Delete', {:action =>"destroy", :id  => item.id}, :class => "glyphicon glyphicon-remove bold" , method: :delete, data: { confirm: 'Are you sure?' } %>
+                  <%= link_to 'Delete', {:action =>"destroy", :id  => item.id}, :class => "glyphicon glyphicon-trash bold" , method: :delete, data: { confirm: 'Are you sure?' } %>
                   </li> 
                 </ul>
               </div>
@@ -92,7 +92,11 @@
       <div class="col-md-12">
       <!-- the user -->
       <span class="glyphicon glyphicon-user"></span>
-      <%= link_to item.user.name, {:controller =>"users", :action => "profile", :name=> item.user.name},  :target => "_blank" %>
+      <% if @loggedInUser.nil? %>
+        <span class="blur">must login</span>
+      <% else %>
+        <%= link_to item.user.name, {:controller =>"users", :action => "profile", :name=> item.user.name},  :target => "_blank", :class =>"tester" %>
+      <% end %>
       <!-- time -->
       <span class="glyphicon glyphicon-time"></span>
       <%= time_ago_in_words(item.created_at) %>

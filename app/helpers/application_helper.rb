@@ -70,7 +70,7 @@ module ApplicationHelper
     def returnCategoryCollection
     	arrCollection = []
     	# default entry
-    	arrCollection.push(['- Choose--',''])
+    	arrCollection.push(['-- Choose --',''])
     	# turn category into array
     	arrCategory = Rails.application.config.arrCategory.split(',')
     	# loop and push each one
@@ -93,8 +93,6 @@ module ApplicationHelper
 	def returnFollow(followType_tx, user_id)
 		arrRes = []
 		
-		#query = 'select f.id, loginallowed,name from follows f inner join users u on u.id = f.user_id and '
-
 		if(followType_tx =='follows')
 			query = 'select f.id, loginallowed,name from follows f inner join users u on u.id = f.user_id and f.follower_id = ' + user_id
 		else
@@ -110,5 +108,12 @@ module ApplicationHelper
       	return arrRes
 	end
 
+	# determine login status
+	def checkLoginStatus
+		 # redirect to main page if already signed in
+    	if !returnLoggedinUser.nil?
+      		redirect_to :controller => "articles", :action=> "index"
+    	end
+	end
 end
  

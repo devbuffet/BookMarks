@@ -1,5 +1,8 @@
 class SessionsController < ApplicationController
 	def new 
+     # already logged in?
+    checkLoginStatus()
+
      # active tab => LOGIN
     @active_tab = "LOGIN"
 
