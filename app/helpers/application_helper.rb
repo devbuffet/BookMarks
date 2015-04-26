@@ -25,6 +25,8 @@ module ApplicationHelper
   				return "alert alert-success alert-dismissible"	
 			when "error_message"
   				return "alert alert-danger alert-dismissible"	
+  			when "warning_message"
+  				return "alert alert-warning alert-dismissible"	
 		end
 	end
 	
@@ -84,7 +86,7 @@ module ApplicationHelper
     # checks for valid login
     def validateLogin
     	if (returnLoggedinUser.blank?)
-    		flash[:success_message]= "You must be logged in to do that."
+    		flash[:warning_message]= "You must be logged in to do that."
         	redirect_to :action => "new", :controller => "sessions"
     	end
 	end

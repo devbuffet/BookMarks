@@ -104,6 +104,9 @@
       <% if name.to_s == "success_message" %>
             <!-- sucess -->
             <span aria-hidden="true" class="glyphicon glyphicon-ok-circle"></span>&nbsp;
+      <% elsif name.to_s == "warning_message" %>
+            <!-- error -->
+            <span aria-hidden="true" class="glyphicon glyphicon-exclamation-sign"></span>&nbsp;          
       <% else %>
             <!-- error -->
             <span aria-hidden="true" class="glyphicon glyphicon-exclamation-sign"></span>&nbsp;
@@ -121,6 +124,7 @@
 <!-- clear flash message -->
 <% flash[:error_message] = nil %>
 <% flash[:success_message] = nil %>
+<% flash[:warning_message] = nil %>
 
 </div>
 
