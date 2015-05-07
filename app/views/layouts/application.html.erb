@@ -33,7 +33,7 @@
       </button>
        <!-- not logged in -->
           <% if @AccountUser.blank? %>
-           <%= link_to "Bookmarky", {:action=> "index", :controller => "articles"}, :class => "navbar-brand" %>
+           <%= link_to "KeepMarx", {:action=> "index", :controller => "articles"}, :class => "navbar-brand" %>
           <% else %>
           <!-- logged in -->
           <%= link_to "Profile",{:controller => "users", :action => "profile", :name => @AccountUser.name}, :class => "navbar-brand underline" %>

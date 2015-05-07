@@ -2,7 +2,7 @@ class PasswordresetsController < ApplicationController
 	# new request
 	def new 
     	@user = User.new 
-    end
+  end
 
     # save request
 	def create 

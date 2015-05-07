@@ -1,5 +1,5 @@
 class ArticlesController < ApplicationController  
- 
+
   def category
 
     # authorized?
@@ -9,14 +9,14 @@ class ArticlesController < ApplicationController
     @title = "Bookmarks filed under <i>" + params[:category].to_s + "</i>"
     # posts based on category
     @articles = Article.where("public = ? AND category = ? AND active = ?", true, params[:category],true)
-                     .includes(:user)
-                     .order("Created_at DESC")
+    .includes(:user)
+    .order("Created_at DESC")
     # user/category 
     @arrUserAttrib = [true,false,"bookmark"]  
 
     # log activity
     logUserActivity("viewed category: " + params[:category].to_s) 
-   
+
   end
 
   def show 
@@ -46,9 +46,6 @@ class ArticlesController < ApplicationController
         redirect_to article.link
       end
     end
-
-    
-     
   end
 
   def index
@@ -70,8 +67,8 @@ class ArticlesController < ApplicationController
     # perform search
     # association
     @articles = Article.where("active = ?", true).includes(:user)
-                       .text_search(params[:search_tx])
-                       .order("Created_at " + (params[:sortOrder_tx].present? ? params[:sortOrder_tx] : "DESC"))
+    .text_search(params[:search_tx])
+    .order("Created_at " + (params[:sortOrder_tx].present? ? params[:sortOrder_tx] : "DESC"))
     
     @loggedInUser = returnLoggedinUser
 
@@ -106,35 +103,35 @@ class ArticlesController < ApplicationController
     # posts are public by default
     @article.public = true
   end
- 
+
   def create
-   
+
     # authorized?
     validateLogin()
-     
+
     @article = Article.new(article_params)
 
     # set foreign field -> user_id
     @article.user_id = returnLoggedinUser.id
- 
+
     if @article.save
      # log activity
      logUserActivity("added bookmark: " + @article.id.to_s) 
      # success 
      flash[:success_message] = "<strong>Success!</strong> Your bookmark has been added."    
      redirect_to :action => "index"
-    else
-      @btnName_tx = "Add"
-      render ('new')
-    end
+   else
+    @btnName_tx = "Add"
+    render ('new')
   end
+end
 
-  def edit
+def edit
 
-    userLoggedIn = returnLoggedinUser()
+  userLoggedIn = returnLoggedinUser()
 
-    @btnName_tx = "Update"
-    @article = Article.find(params[:id])
+  @btnName_tx = "Update"
+  @article = Article.find(params[:id])
 
     # get post owner info
     postOwner = @article.user_id
@@ -143,30 +140,30 @@ class ArticlesController < ApplicationController
         # flash user
         flash[:error_message] = "<strong>Sorry you are not the bookmark owner.</strong>"
         redirect_to :action => "index"
+      end
     end
-  end
 
-  def returnAttribChange(oldarticle, newarticle)
+    def returnAttribChange(oldarticle, newarticle)
     # track what changed?
     # start of empty
     message_tx = "";
     # append applicable attrib changes
-     if oldarticle.title != newarticle.title
-       message_tx += ";Title changed from " + oldarticle.title + " to " + newarticle.title
-     end
-     if oldarticle.category != newarticle.category
-       message_tx += ";Category changed from " + oldarticle.category + " to " + newarticle.category
-     end
-     if oldarticle.public != newarticle.public
-       message_tx += ";Public changed from " + oldarticle.public.to_s + " to " + newarticle.public.to_s 
-     end 
-     return message_tx
-  end
+    if oldarticle.title != newarticle.title
+     message_tx += ";Title changed from " + oldarticle.title + " to " + newarticle.title
+   end
+   if oldarticle.category != newarticle.category
+     message_tx += ";Category changed from " + oldarticle.category + " to " + newarticle.category
+   end
+   if oldarticle.public != newarticle.public
+     message_tx += ";Public changed from " + oldarticle.public.to_s + " to " + newarticle.public.to_s 
+   end 
+   return message_tx
+ end
 
-  def update
-    @btnName_tx = "Update"
+ def update
+  @btnName_tx = "Update"
   
-    @article = Article.find(params[:id])
+  @article = Article.find(params[:id])
 
     # what changed?
     message_tx = returnAttribChange(@article, (Article.new(article_params)))
@@ -184,12 +181,12 @@ class ArticlesController < ApplicationController
       flash[:error_message] = "Please update something."  
       render ('edit')
     end
-end
+  end
 
-def destroy
-  @article = Article.find(params[:id])
-  @article.active = false
-  @article.save
+  def destroy
+    @article = Article.find(params[:id])
+    @article.active = false
+    @article.save
   # log activity
   logUserActivity("deleted bookmark: " + @article.id.to_s) 
   # success 
@@ -198,7 +195,7 @@ def destroy
 end
 
 private
-  def article_params
-    params.require(:article).permit(:title, :link, :category, :public, :user_id, :active)
-  end
+def article_params
+  params.require(:article).permit(:title, :link, :category, :public, :user_id, :active)
+end
 end

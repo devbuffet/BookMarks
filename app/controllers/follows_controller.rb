@@ -14,6 +14,9 @@ class FollowsController < ApplicationController
 				@objFollow.follower_id = @loggedInUser.id
 				@objFollow.user_id = params[:id]
 				@objFollow.save
+
+				# log activity
+  				logUserActivity("follow user: " + params[:id].to_s)
 			
 				# success 
   				flash[:success_message] = "<strong>You're now following " + params[:name] + "!</strong>"    
@@ -64,6 +67,10 @@ class FollowsController < ApplicationController
 			else
 				# perform hard delete since this data is unimportant
 				Follow.find(params[:id]).destroy
+
+				# log activity
+  				logUserActivity("unfollow user: " + params[:id].to_s)
+
        			# success 
   				flash[:success_message] = "<strong>Successfully unfollowed " + params[:name] + "!</strong>"    
   				redirect_to :action => "index"
