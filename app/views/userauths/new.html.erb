@@ -1,0 +1,15 @@
+<h4 class="inline"><span class="glyphicon glyphicon-remove"></span>Deactivate Account</h4>
+<h1 class="divider"></h1>
+<div>
+<h4>To close this account, verify that it's yours</h4>
+</div>
+<!-- code form -->
+<%= form_for @user, :url => {:controller => "userauths"} do |f| %>
+<div class="bg_break">
+    <%= f.label :password %><br>
+    <%= f.password_field :password , :class => 'form-control login_input' %>
+</div> 
+<div class="bg_break">
+    <%= f.submit "Deactivate",  :class => 'btn btn-danger' %> 
+</div>  
+<% end %>

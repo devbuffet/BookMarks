@@ -18,11 +18,11 @@ class PasswordresetsController < ApplicationController
     	 	# success, generate code and email user
 			  @AccountUser.code_tx = SecureRandom.hex(3).downcase
 			  @AccountUser.save  
-              # log activity
-              logUserActivity("password reset request", @AccountUser.id) 
+        # log activity
+        logUserActivity("password reset request", @AccountUser.id) 
 			  # send email
-              UserMailer.passwordreset_sendMail(@AccountUser, "xxx: Password Reset.").deliver
-              flash[:success_message] = "Security code sent to <strong>" + @AccountUser.email.to_s + "</strong> .Please check your inbox."
+        UserMailer.passwordreset_sendMail(@AccountUser, ENV['siteName'] + ": Password Reset.").deliver
+        flash[:success_message] = "Security code sent to <strong>" + @AccountUser.email.to_s + "</strong> .Please check your inbox."
     	 end
     	 # render template
     	 render('new')

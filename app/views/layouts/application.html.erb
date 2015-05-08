@@ -31,10 +31,7 @@
          <span class="icon-bar"></span>
          <span class="icon-bar"></span>
       </button>
-       <!-- not logged in -->
-          <% if @AccountUser.blank? %>
-           <%= link_to "KeepMarx", {:action=> "index", :controller => "articles"}, :class => "navbar-brand" %>
-          <% else %>
+          <% if !@AccountUser.blank? %>
           <!-- logged in -->
           <%= link_to "Profile",{:controller => "users", :action => "profile", :name => @AccountUser.name}, :class => "navbar-brand underline" %>
           <% end %>
@@ -64,6 +61,15 @@
             <%= link_to "Register", {:controller => "users", :action => "new"}, :class => "bold glyphicon glyphicon-user" %>
         </li>
         <% end %> 
+       <li class = "<%= (@active_tab == "HELP" ? "active" : "") %>">
+              <%= link_to "Help", {:controller => "articles", :action => "help"}, :class => "bold glyphicon glyphicon-pencil" %>
+          </li>
+        <!-- deactive should be last link -->
+        <% if !@AccountUser.blank? %>
+          <li class = "<%= (@active_tab == "DEACTIVATE" ? "active" : "") %>">
+            <%= link_to "Deactivate", {:controller => "userauths", :action => "new"}, :class => "bold glyphicon glyphicon-remove" %>
+        </li>
+        <% end %>
       </ul>
     <!-- welcome message -->
     
@@ -77,7 +83,7 @@
       <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
         <li role="presentation">
             <%= link_to "Profile",{:controller => "users", :action => "profile", :name => @AccountUser.name}, {:role => "menuitem", :tabindex => "-1"} %>
-        </li>
+        </li>       
         <li role="presentation">
             <%= link_to "Sign Out",{:controller => "sessions", :action => "logout"}, {:role => "menuitem", :tabindex => "-1"} %>
         </li>
@@ -109,7 +115,7 @@
       <% else %>
             <!-- error -->
             <span aria-hidden="true" class="glyphicon glyphicon-exclamation-sign"></span>&nbsp;
-      <strong>Please fix the errors below:</strong>
+      <strong>Please fix the following:</strong><br/>
       <% end %>
     <%= msg.html_safe %>
   </div>

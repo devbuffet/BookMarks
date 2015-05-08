@@ -49,7 +49,7 @@ class SessionsController < ApplicationController
     # delete the cookie
     cookies.delete :password_hash
     # redirect
-    redirect_to :action => "index", :controller => "articles"
+    redirect_to :action => "index", :controller => "articles", :code => params[:code]
   end
 
 private

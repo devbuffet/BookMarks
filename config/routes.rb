@@ -9,8 +9,10 @@ Fav::Application.routes.draw do
   match 'bookmarks/:id/delete' => 'articles#destroy'
   match 'bookmarks/:id/show' => 'articles#show'
   match 'bookmarks/new' => 'articles#new'
+  match 'bookmarks/help' => 'articles#help'
   match "passwordresets/validateToken" => 'passwordresets#validateToken'
   match "users/forgotpassword" => 'passwordresets#new'
+  match "users/deactivate" => 'userauths#new'
   # user profile
   match 'users/profile/(:name)' => 'users#profile'
   match 'bookmarks/category/(:category)' => 'articles#category'
@@ -18,7 +20,7 @@ Fav::Application.routes.draw do
   match 'follows/:id/delete' => 'follows#destroy'
   match 'follows/:id/add' => 'follows#add'
   
-  resources :articles,:users,:sessions,:passwordresets,:follows
+  resources :articles,:users,:sessions,:passwordresets,:follows, :userauths
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

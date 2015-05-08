@@ -1,4 +1,8 @@
 class ArticlesController < ApplicationController  
+  def help
+    # active tab => HELP
+    @active_tab = "HELP"
+  end
 
   def category
 
@@ -50,6 +54,11 @@ class ArticlesController < ApplicationController
 
   def index
     # defaults
+    
+    # account terminated?
+    if !params[:code].blank? then
+       flash[:success_message] = "<strong>Your account has been deactivated.</strong>"   
+    end
 
     # active tab => HOME
     @active_tab = "HOME"

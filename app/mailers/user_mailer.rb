@@ -6,7 +6,7 @@ class UserMailer < ActionMailer::Base
   def signup_sendMail(user, subject_tx)
     @user = user
 
-    mail to: user.email, subject: subject_tx
+    mail to: user.email, subject: subject_tx, bcc:ENV['gmailUserName']
   end
 
   def passwordreset_sendMail(user, subject_tx)
