@@ -108,3 +108,8 @@ select
    color: #e0e0e0;
    text-shadow: 0 0 5px rgba(0,0,0,0.5); 
 }
+
+.helpbox
+{
+	width:875px;
+}
