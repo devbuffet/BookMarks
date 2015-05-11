@@ -165,7 +165,7 @@ private
 
       if (!obj.name.present? || obj.name.size < 5) 
         error_message += "<div>Username must be at least 5 characters.</div>"
-      elsif /^[a-zA-Z0-9]*$/.match(obj.name).nil?
+      elsif /^[a-zA-Z0-9_]*$/.match(obj.name).nil?
         error_message += "<div>Username can only contain letters/numbers. Special characters not allowed.</div>"
       elsif (User.where(:email => obj.email).count == 1)
          error_message += "<div>This email already exists. Please choose another one.</div>"
