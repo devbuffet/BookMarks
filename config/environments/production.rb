@@ -76,6 +76,6 @@ ActionMailer::Base.smtp_settings = {
   :enable_starttls_auto => true
 }
 
-config.action_mailer.default(from: ENV['siteUserName'])
+#config.action_mailer.default(from: ENV['siteUserName'])
 
 end
