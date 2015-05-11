@@ -6,12 +6,12 @@ class UserMailer < ActionMailer::Base
   def signup_sendMail(user, subject_tx)
     @user = user
 
-    mail to: user.email, subject: subject_tx, bcc:ENV['gmailUserName'], from: ENV['siteUserName']
+    mail to: user.email, subject: subject_tx, bcc:ENV['gmailUserName']
   end
 
   def passwordreset_sendMail(user, subject_tx)
     @user = user
      @url_tx = Rails.application.config.url + "users/" + user.id.to_s + "/edit?token=" + user.code_tx.to_s
-     mail to: user.email, subject: subject_tx, from: ENV['siteUserName']
+    mail to: user.email, subject: subject_tx
   end 
 end
